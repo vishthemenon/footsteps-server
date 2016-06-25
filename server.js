@@ -16,7 +16,7 @@ app.get('/users', function(req, res) {
   })
 })
 
-app.get('/user/:id', function(req, res) {
+app.get('/users/:id', function(req, res) {
   r.table('users').get(parseInt(req.params.id)).run().then(function(result) {
     if(result === null) {
       res.send ('user not found')
@@ -27,7 +27,7 @@ app.get('/user/:id', function(req, res) {
   })
 })
 
-app.post('/user/session', function(req, res) {
+app.post('/users/session', function(req, res) {
   r.table('users').filter({name: req.body.name}).run().then(function(result) {
     if(result === null) {
       res.send('User not found')
@@ -55,8 +55,8 @@ app.post('/routes', function(req, res) {
   })
 })
 
-app.get('/users/:id/routes', function(req, res) {
-  r.table('routes').filter({user_id: parseInt(req.params.id)}).run().then(function(result) {
+app.get('/users/:username/routes', function(req, res) {
+  r.table('routes').filter({user_name: parseInt(req.params.username)}).run().then(function(result) {
     res.send(result)
   })
 })
