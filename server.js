@@ -56,8 +56,6 @@ app.post('/routes', function(req, res) {
   })
 })
 
-
-
 app.get('/users/:id/routes', function(req, res) {
   r.table('routes').filter({user_id: req.params.id}).run().then(function(result) {
     res.send(result)
@@ -96,13 +94,9 @@ app.get('/groups/:id/messages/', function(req, res) {
   })
 })
 
-
-
-
 app.listen((process.env.PORT||3000), function() {
   console.log("Shit is being served on port 3000")
 })
-
 
 function titleCase(str) {
   str = str.toLowerCase().split(' ');
