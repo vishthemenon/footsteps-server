@@ -80,21 +80,34 @@ app.post('/groups', function(req, res) {
 })
 
 app.get('/groups/:id/messages/', function(req, res) {
-  r.table('messages').filter({group_id: parseInt(req.params.id)}).run().then(function(result) {
+  r.table('messages').orderBy({index: 'time'}).filter({group_id: parseInt(req.params.id)}).run().then(function(result) {
+    var profile = []
     var fresult = []
     result.map(function(msg) {
       r.table('users').get(msg.user_id).run().then(function(user) {
         fresult.push({
           message: msg.message,
-          user_name: titleCase(user.name),
+          display_name: titleCase(user.name),
+          user_name: user.user_name,
           time: msg.time
         })
+        if(!profile.find(function(p) {
+          return p.username === user.user_name
+        })) {
+          profile.push({
+            username: user.user_name,
+            profile_url: user.profile_pic
+          })
+        }
+
       })
     })
     var asyncCheck = setInterval(function() {
       if (result.length == fresult.length) {
         clearInterval(asyncCheck);
-        res.send(fresult)
+        res.send({
+          messages: fresult,
+          profiles: profile})
       }
     }, 2);
   })
