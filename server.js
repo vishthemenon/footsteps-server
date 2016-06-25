@@ -17,9 +17,10 @@ app.get('/users', function(req, res) {
 })
 
 app.get('/user/:id', function(req, res) {
-  r.table('users').get(req.params.id).run().then(function(result) {
+  r.table('users').get(parseInt(req.params.id)).run().then(function(result) {
     if(result === null) {
-      res.send('user not found')
+      res.send(
+        'user not found')
     }
     else {
       res.send(result)
@@ -45,7 +46,6 @@ app.get('/routes', function(req, res) {
   })
 })
 
-
 app.post('/routes', function(req, res) {
   var generated_coord = [1, 2]
   r.table('routes').insert({
@@ -57,7 +57,7 @@ app.post('/routes', function(req, res) {
 })
 
 app.get('/users/:id/routes', function(req, res) {
-  r.table('routes').filter({user_id: req.params.id}).run().then(function(result) {
+  r.table('routes').filter({user_id: parseInt(req.params.id)}).run().then(function(result) {
     res.send(result)
   })
 })
@@ -70,6 +70,12 @@ app.post('/message', function(req, res) {
     time: Math.floor((new Date()).getTime()/1000)
   }).run().then(function(result) {
     res.send(result)
+  })
+})
+
+app.post('/groups', function(req, res) {
+  r.table('groups').insert({
+
   })
 })
 
