@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/vishthemenon/footsteps-server#readme",
   "dependencies": {
+    "async": "^2.0.0-rc.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "rethinkdb": "^2.3.2",

@@ -59,7 +59,7 @@ app.post('/message', function(req, res) {
     group_id: req.body.group_id,
     user_id: req.body.user_id,
     message: req.body.message,
-    time: new Date()
+    time: Math.floor((new Date()).getTime()/1000)
   }).run().then(function(result) {
     res.send(result)
   })
@@ -67,7 +67,22 @@ app.post('/message', function(req, res) {
 
 app.get('/groups/:id/messages/', function(req, res) {
   r.table('messages').filter({group_id: parseInt(req.params.id)}).run().then(function(result) {
-    res.send(result)
+    var fresult = []
+    result.map(function(msg) {
+      r.table('users').get(msg.user_id).run().then(function(user) {
+        fresult.push({
+          message: msg.message,
+          user_name: titleCase(user.name),
+          time: msg.time
+        })
+      })
+    })
+    var asyncCheck = setInterval(function() {
+      if (result.length == fresult.length) {
+        clearInterval(asyncCheck);
+        res.send(fresult)
+      }
+    }, 2);
   })
 })
 
@@ -75,3 +90,15 @@ app.get('/groups/:id/messages/', function(req, res) {
 app.listen((process.env.PORT||3000), function() {
   console.log("Shit is being served on port 3000")
 })
+
+
+function titleCase(str) {
+  str = str.toLowerCase().split(' ');
+
+  for(var i = 0; i < str.length; i++){
+    str[i] = str[i].split('');
+    str[i][0] = str[i][0].toUpperCase();
+    str[i] = str[i].join('');
+  }
+  return str.join(' ');
+}
