@@ -27,19 +27,46 @@ app.get('/user/:id', function(req, res) {
   })
 })
 
-app.post('/user/session/new', function(req, res) {
-  r.table('users').filter({email: req.body.email}).run().then(function(result) {
+app.post('/user/session', function(req, res) {
+  r.table('users').filter({name: req.body.name}).run().then(function(result) {
     if(result === null) {
-      res.send('user not found')
+      res.send('User not found')
     }
     else {
-      res.send(result)
+      res.send(result[0].id)
     }
   })
 })
 
-app.post('/user/new', function(req, res) {
+app.post('/routes', function(req, res) {
+  var generated_coord = [1, 2]
+  r.table('routes').insert({
+    user_id: req.body.user_id,
+    coord: [req.body.start_point, generated_coord, req.body.end_point]
+  }).run().then(function(result) {
+    res.send(result)
+  })
+})
 
+app.get('users/:id/routes', function(req, res) {
+  r.table('routes').filter({user_id: req.params.id}).run().then(function(result) {
+    res.send(result)
+  })
+})
+
+app.post('message', function(req, res) {
+  r.table('messages').insert({
+    group_id: 1,
+    user_id: req.body.id,
+    message: req.body.message,
+    time: Date.now
+  })
+})
+
+app.get('groups/:id/messages/', function(req, res) {
+  r.table('message').filter({group_id: req.params.id}).run().then(function(result) {
+    res.send(result)
+  })
 })
 
 
