@@ -64,7 +64,7 @@ app.post('/message', function(req, res) {
 })
 
 app.get('/groups/:id/messages/', function(req, res) {
-  r.table('message').filter({group_id: req.params.id}).run().then(function(result) {
+  r.table('messages').filter({group_id: req.params.id}).run().then(function(result) {
     res.send(result)
   })
 })
