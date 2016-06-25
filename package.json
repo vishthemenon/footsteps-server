@@ -19,6 +19,7 @@
   "homepage": "https://github.com/vishthemenon/footsteps-server#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "rethinkdb": "^2.3.2",
     "rethinkdbdash": "^2.3.9"
   }
 }
