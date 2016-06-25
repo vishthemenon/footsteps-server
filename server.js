@@ -38,6 +38,14 @@ app.post('/user/session', function(req, res) {
   })
 })
 
+app.get('/routes', function(req, res) {
+  r.table('routes').run().then(function(result) {
+    console.log(result)
+    res.send(result)
+  })
+})
+
+
 app.post('/routes', function(req, res) {
   var generated_coord = [1, 2]
   r.table('routes').insert({
@@ -47,6 +55,8 @@ app.post('/routes', function(req, res) {
     res.send(result)
   })
 })
+
+
 
 app.get('/users/:id/routes', function(req, res) {
   r.table('routes').filter({user_id: req.params.id}).run().then(function(result) {
@@ -85,6 +95,8 @@ app.get('/groups/:id/messages/', function(req, res) {
     }, 2);
   })
 })
+
+
 
 
 app.listen((process.env.PORT||3000), function() {
