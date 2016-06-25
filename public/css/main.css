@@ -1,5 +1,5 @@
 	div {
-	transition: all .5s;
+	transition: all 2.5s linear;
 	}
 html, body{
 	height: 100%;
