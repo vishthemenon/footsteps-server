@@ -1,4 +1,5 @@
-var app = require('express')()
+var express = require('express')
+var app = express()
 var bodyParser = require('body-parser')
 var r = require('rethinkdbdash')({
   db: 'footsteps',
@@ -7,7 +8,12 @@ var r = require('rethinkdbdash')({
 })
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(__dirname + '/public'))
+
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+})
 
 app.get('/users', function(req, res) {
   r.table('users').run().then(function(result) {
@@ -56,7 +62,7 @@ app.post('/routes', function(req, res) {
 })
 
 app.get('/users/:username/routes', function(req, res) {
-  r.table('routes').filter({user_name: parseInt(req.params.username)}).run().then(function(result) {
+  r.table('routes').filter({user_name: req.params.username}).run().then(function(result) {
     res.send(result)
   })
 })
