@@ -46,8 +46,7 @@ app.post('/users/session', function(req, res) {
 
 app.get('/routes', function(req, res) {
   r.table('routes').run().then(function(result) {
-    console.log(result)
-    res.send(result)
+    res.send(result[0].coord)
   })
 })
 
