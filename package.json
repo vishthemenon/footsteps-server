@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/vishthemenon/footsteps-server/issues"
   },
-  "homepage": "https://github.com/vishthemenon/footsteps-server#readme"
+  "homepage": "https://github.com/vishthemenon/footsteps-server#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "rethinkdbdash": "^2.3.9"
+  }
 }
