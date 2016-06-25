@@ -48,23 +48,23 @@ app.post('/routes', function(req, res) {
   })
 })
 
-app.get('users/:id/routes', function(req, res) {
+app.get('/users/:id/routes', function(req, res) {
   r.table('routes').filter({user_id: req.params.id}).run().then(function(result) {
     res.send(result)
   })
 })
 
-app.post('message', function(req, res) {
+app.post('/message', function(req, res) {
   r.table('messages').insert({
-    group_id: 1,
+    group_id: req.body.group_id,
     user_id: req.body.id,
     message: req.body.message,
     time: Date.now
   })
 })
 
-app.get('groups/:id/messages/', function(req, res) {
-  r.table('message').filter({group_id: req.params.id}).run().then(function(result) {
+app.get('/groups/:id/messages/', function(req, res) {
+  r.table('message').filter({gro  up_id: req.params.id}).run().then(function(result) {
     res.send(result)
   })
 })
